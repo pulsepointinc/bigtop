@@ -12,6 +12,8 @@ class bigtop_pp::node_with_components inherits bigtop_pp::hadoop_cluster_node {
     }
   }
 
+  notice("Roles to deploy: ${roles_map}")
+
   $given_components = $components_array[0] ? {
     "all"   => delete(keys($roles_map), ["hdfs-non-ha", "hdfs-ha"]) << "hdfs",
     default => $components_array,
