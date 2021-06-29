@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class bigtop_repo {
+class bigtop_pp::bigtop_repo {
   $bigtop_repo_default_version = hiera("bigtop::bigtop_repo_default_version")
   $bigtop_repo_gpg_check = hiera("bigtop::bigtop_repo_gpg_check", true)
   $lower_os = downcase($operatingsystem)

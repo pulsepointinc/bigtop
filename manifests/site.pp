@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require jdk
-Class['jdk'] -> Service<||>
+class bigtop_pp {
+  require bigtop_pp::jdk
+  Class['bigtop_pp::jdk'] -> Service<||>
 
-$provision_repo = hiera("bigtop::provision_repo", true)
-if ($provision_repo) {
-   require bigtop_repo
-}
+  $provision_repo = hiera("bigtop::provision_repo", true)
+  if ($provision_repo) {
+    require bigtop_pp::bigtop_repo
+  }
 
-node default {
   $roles_enabled = hiera("bigtop::roles_enabled", false)
 
   if (!is_bool($roles_enabled)) {
@@ -31,13 +31,13 @@ node default {
   if ($roles_enabled) {
     include node_with_roles
   } else {
-    include node_with_components
+    include bigtop_pp::node_with_components
   }
-}
 
-if versioncmp($::puppetversion,'3.6.1') >= 0 {
-  $allow_virtual_packages = hiera('bigtop::allow_virtual_packages',false)
-  Package {
-    allow_virtual => $allow_virtual_packages,
+  if versioncmp($::puppetversion,'3.6.1') >= 0 {
+    $allow_virtual_packages = hiera('bigtop::allow_virtual_packages',false)
+    Package {
+      allow_virtual => $allow_virtual_packages,
+    }
   }
 }

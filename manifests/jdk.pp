@@ -15,7 +15,7 @@
 
 $jdk_preinstalled = hiera("bigtop::jdk_preinstalled", false)
 
-class jdk {
+class bigtop_pp::jdk {
   case $::operatingsystem {
     /Debian/: {
       require apt

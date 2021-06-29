@@ -146,7 +146,7 @@ $roles_map = {
   },
 }
 
-class hadoop_cluster_node (
+class bigtop_pp::hadoop_cluster_node (
   $hadoop_security_authentication = hiera("hadoop::hadoop_security_authentication", "simple"),
   $bigtop_real_users = [ 'jenkins', 'testuser', 'hudson' ],
   $cluster_components = ["all"]
@@ -181,7 +181,7 @@ class hadoop_cluster_node (
   }
 }
 
-class node_with_roles ($roles = hiera("bigtop::roles")) inherits hadoop_cluster_node {
+class bigtop_pp::node_with_roles ($roles = hiera("bigtop::roles")) inherits bigtop_pp::hadoop_cluster_node {
   define deploy_module($roles) {
     class { "${name}::deploy":
     roles => $roles,
@@ -218,7 +218,7 @@ class node_with_roles ($roles = hiera("bigtop::roles")) inherits hadoop_cluster_
   }
 }
 
-class node_with_components inherits hadoop_cluster_node {
+class bigtop_pp::node_with_components inherits bigtop_pp::hadoop_cluster_node {
 
   # Ensure (even if a single value) that the type is an array.
   if (is_array($cluster_components)) {
