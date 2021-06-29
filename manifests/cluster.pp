@@ -33,124 +33,12 @@
 # hdfs-non-ha or hdfs-ha depending on whether HA for HDFS is either enabled
 # or disabled.
 
-$roles_map = {
-  hdfs-non-ha => {
-    master => ["namenode"],
-    worker => ["datanode"],
-    standby => ["secondarynamenode"],
-  },
-  hdfs-ha => {
-    master => ["namenode"],
-    worker => ["datanode"],
-    standby => ["standby-namenode"],
-  },
-  yarn => {
-    master => ["resourcemanager"],
-    worker => ["nodemanager"],
-    client => ["hadoop-client"],
-    # mapred is the default app which runs on yarn.
-    library => ["mapred-app"],
-  },
-  mapreduce => {
-    library => ["mapred-app"],
-  },
-  kms => {
-    master => ["kms"],
-  },
-  hbase => {
-    master => ["hbase-master"],
-    worker => ["hbase-server"],
-    client => ["hbase-client"],
-  },
-  solrcloud => {
-    worker => ["solr-server"],
-  },
-  spark => {
-    worker => ["spark-on-yarn"],
-    client => ["spark-client"],
-    library => ["spark-yarn-slave"],
-  },
-  spark-standalone => {
-    master => ["spark-master"],
-    worker => ["spark-worker"],
-  },
-  alluxio => {
-    master => ["alluxio-master"],
-    worker => ["alluxio-worker"],
-  },
-  flink => {
-    master => ["flink-jobmanager"],
-    worker => ["flink-taskmanager"],
-  },
-  kerberos => {
-    master => ["kerberos-server"],
-  },
-  oozie => {
-    master => ["oozie-server"],
-    client => ["oozie-client"],
-  },
-  hcat => {
-    master => ["hcatalog-server"],
-    gateway_server => ["webhcat-server"],
-  },
-  sqoop => {
-    gateway_server => ["sqoop-server"],
-    client => ["sqoop-client"],
-  },
-  httpfs => {
-    gateway_server => ["httpfs-server"],
-  },
-  hive => {
-    master => ["hive-server2", "hive-metastore"],
-    client => ["hive-client"],
-  },
-  tez => {
-    client => ["tez-client"],
-  },
-  zookeeper => {
-    worker => ["zookeeper-server"],
-    client => ["zookeeper-client"],
-  },
-  ycsb => {
-    client => ["ycsb-client"],
-  },
-  zeppelin => {
-    master => ["zeppelin-server"],
-  },
-  gpdb => {
-    master => ["gpdb-master"],
-    worker => ["gpdb-segment"],
-  },
-  kafka => {
-    worker => ["kafka-server"],
-  },
-  ambari => {
-    master => ["ambari-server"],
-    worker => ["ambari-agent"],
-  },
-  bigtop-utils => {
-    client => ["bigtop-utils"],
-  },
-  livy => {
-    master => ["livy-server"],
-  },
-  elasticsearch => {
-    master => ["elasticsearch-server"],
-    worker => ["elasticsearch-server"],
-  },
-  logstash => {
-    client => ["logstash-client"],
-  },
-  kibana => {
-    client => ["kibana-client"],
-  },
-}
-
 class bigtop_pp::hadoop_cluster_node (
   $hadoop_security_authentication = hiera("hadoop::hadoop_security_authentication", "simple"),
   $bigtop_real_users = [ 'jenkins', 'testuser', 'hudson' ],
   $cluster_components = ["all"]
   ) {
+  require bigtop_pp::common
 
   user { $bigtop_real_users:
     ensure     => present,
@@ -182,6 +70,8 @@ class bigtop_pp::hadoop_cluster_node (
 }
 
 class bigtop_pp::node_with_roles ($roles = hiera("bigtop::roles")) inherits bigtop_pp::hadoop_cluster_node {
+  require bigtop_pp::common
+
   define deploy_module($roles) {
     class { "${name}::deploy":
     roles => $roles,
@@ -219,6 +109,7 @@ class bigtop_pp::node_with_roles ($roles = hiera("bigtop::roles")) inherits bigt
 }
 
 class bigtop_pp::node_with_components inherits bigtop_pp::hadoop_cluster_node {
+  require bigtop_pp::common
 
   # Ensure (even if a single value) that the type is an array.
   if (is_array($cluster_components)) {
