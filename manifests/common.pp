@@ -1,4 +1,4 @@
-class bigtop_pp::common (
+class bigtop_pp::common {
   $roles_map = {
     hdfs-non-ha => {
       master => ["namenode"],
