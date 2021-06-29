@@ -13,9 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$jdk_preinstalled = hiera("bigtop::jdk_preinstalled", false)
-
 class bigtop_pp::jdk {
+  $jdk_preinstalled = hiera("bigtop::jdk_preinstalled", false)
   case $::operatingsystem {
     /Debian/: {
       require apt
