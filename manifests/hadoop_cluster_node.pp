@@ -39,6 +39,7 @@ class bigtop_pp::hadoop_cluster_node (
   $cluster_components = ["all"]
   ) {
   require bigtop_pp::common
+  $roles_map = $bigtop_pp::common::roles_map
 
   user { $bigtop_real_users:
     ensure     => present,

@@ -1,5 +1,6 @@
 class bigtop_pp::node_with_components inherits bigtop_pp::hadoop_cluster_node {
   require bigtop_pp::common
+  $roles_map = $bigtop_pp::common::roles_map
 
   # Ensure (even if a single value) that the type is an array.
   if (is_array($cluster_components)) {
@@ -11,8 +12,6 @@ class bigtop_pp::node_with_components inherits bigtop_pp::hadoop_cluster_node {
       $components_array = [$cluster_components]
     }
   }
-
-  notice("Roles to deploy: ${roles_map}")
 
   $given_components = $components_array[0] ? {
     "all"   => delete(keys($roles_map), ["hdfs-non-ha", "hdfs-ha"]) << "hdfs",

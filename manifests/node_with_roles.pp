@@ -1,5 +1,6 @@
 class bigtop_pp::node_with_roles ($roles = hiera("bigtop::roles")) inherits bigtop_pp::hadoop_cluster_node {
   require bigtop_pp::common
+  $roles_map = $bigtop_pp::common::roles_map
 
   define deploy_module($roles) {
     class { "${name}::deploy":
