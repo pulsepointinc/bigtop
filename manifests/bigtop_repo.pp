@@ -45,8 +45,8 @@ class bigtop_pp::bigtop_repo {
             ensure  => present,
           }
         }
+        Yumrepo["Bigtop_$count"] -> Package<||>
       }
-      Yumrepo["Bigtop_$count"] -> Package<||>
     }
 
     /(Ubuntu|Debian)/: {
