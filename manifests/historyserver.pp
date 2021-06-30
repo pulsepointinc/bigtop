@@ -1,4 +1,6 @@
 class hadoop::historyserver {
+  require hadoop
+
   include hadoop::common_mapred_app
 
   package { "hadoop-mapreduce-historyserver":

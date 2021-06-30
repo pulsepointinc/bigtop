@@ -1,4 +1,6 @@
 class hadoop::deploy ($roles) {
+  require hadoop
+
   if ("datanode" in $roles) {
     include hadoop::datanode
   }

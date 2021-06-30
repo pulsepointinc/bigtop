@@ -1,4 +1,5 @@
 class hadoop::client {
+    require hadoop
     include hadoop::common_mapred_app
     include hadoop::common_yarn
 
