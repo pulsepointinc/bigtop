@@ -43,7 +43,7 @@ class kerberos::krb_site ($domain = inline_template('<%= @domain %>'),
   }
 
   # Required for SPNEGO
-  @principal { "HTTP": 
+  @kerberos::principal { "HTTP":
 
   }
 }
