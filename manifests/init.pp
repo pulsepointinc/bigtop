@@ -29,7 +29,7 @@ class bigtop_pp {
   }
 
   if ($roles_enabled) {
-    include node_with_roles
+    include bigtop_pp::node_with_roles
   } else {
     include bigtop_pp::node_with_components
   }
