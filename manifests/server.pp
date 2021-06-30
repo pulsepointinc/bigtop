@@ -17,8 +17,11 @@ class hadoop_zookeeper::server($myid,
 
   service { "zookeeper-server":
     ensure => running,
-    require => [ Package["zookeeper-server"],
-                 Exec["zookeeper-server-initialize"] ],
+    require => [
+      Package["zookeeper-server"],
+      Exec["zookeeper-server-initialize"],
+      Class['bigtop_pp::jdk']
+    ],
     subscribe => [ File["/etc/zookeeper/conf/zoo.cfg"],
                    File["/var/lib/zookeeper/myid"] ],
     hasrestart => true,
