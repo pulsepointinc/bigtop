@@ -11,7 +11,10 @@ class hadoop::proxyserver {
     hasstatus => true,
     subscribe => [Package["hadoop-yarn-proxyserver"], File["/etc/hadoop/conf/hadoop-env.sh"], 
                   File["/etc/hadoop/conf/yarn-site.xml"], File["/etc/hadoop/conf/core-site.xml"]],
-    require => [ Package["hadoop-yarn-proxyserver"] ],
+    require => [
+      Package["hadoop-yarn-proxyserver"],
+      Class['bigtop_pp::jdk']
+    ],
   }
   Kerberos::Host_keytab <| tag == "mapreduce" |> -> Service["hadoop-yarn-proxyserver"]
 }

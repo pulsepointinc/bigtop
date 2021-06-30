@@ -50,7 +50,10 @@ class hadoop::httpfs ($hadoop_httpfs_port = "14000",
     hasstatus => true,
     subscribe => [Package["hadoop-httpfs"], File["/etc/hadoop/conf/httpfs-site.xml"], File["/etc/hadoop/conf/httpfs-env.sh"], File["/etc/hadoop/conf/httpfs-signature.secret"],
       File["/etc/hadoop/conf/core-site.xml"], File["/etc/hadoop/conf/hdfs-site.xml"]],
-    require => [ Package["hadoop-httpfs"] ],
+    require => [
+      Package["hadoop-httpfs"],
+      Class['bigtop_pp::jdk']
+    ],
   }
   Kerberos::Host_keytab <| title == "httpfs" |> -> Service["hadoop-httpfs"]
 }

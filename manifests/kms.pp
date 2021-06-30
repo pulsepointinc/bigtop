@@ -62,7 +62,10 @@ class hadoop::kms ($kms_host = $hadoop::kms_host,
     hasstatus => true,
     subscribe => [Package["hadoop-kms"], File["/etc/hadoop/conf/kms-site.xml"], File["/etc/hadoop/conf/kms-env.sh"], File["/etc/hadoop/conf/kms-signature.secret"],
       File["/etc/hadoop/conf/core-site.xml"], File["/etc/hadoop/conf/hdfs-site.xml"]],
-    require => [ Package["hadoop-kms"] ],
+    require => [
+      Package["hadoop-kms"],
+      Class['bigtop_pp::jdk']
+    ],
   }
   Kerberos::Host_keytab <| title == "kms" |> -> Service["hadoop-kms"]
 }

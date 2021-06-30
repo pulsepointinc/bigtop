@@ -13,7 +13,11 @@ class hadoop::journalnode {
     hasstatus => true,
     subscribe => [Package["hadoop-hdfs-journalnode"], File["/etc/hadoop/conf/hadoop-env.sh"],
                   File["/etc/hadoop/conf/hdfs-site.xml"], File["/etc/hadoop/conf/core-site.xml"]],
-    require => [ Package["hadoop-hdfs-journalnode"], File[$journalnode_cluster_journal_dir] ],
+    require => [
+      Package["hadoop-hdfs-journalnode"],
+      File[$journalnode_cluster_journal_dir],
+      Class['bigtop_pp::jdk']
+    ],
   }
 
   hadoop::create_storage_dir { [$hadoop::common_hdfs::journalnode_edits_dir, $journalnode_cluster_journal_dir]: } ->

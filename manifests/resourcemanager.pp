@@ -11,7 +11,10 @@ class hadoop::resourcemanager {
     hasstatus => true,
     subscribe => [Package["hadoop-yarn-resourcemanager"], File["/etc/hadoop/conf/hadoop-env.sh"], 
                   File["/etc/hadoop/conf/yarn-site.xml"], File["/etc/hadoop/conf/core-site.xml"]],
-    require => [ Package["hadoop-yarn-resourcemanager"] ],
+    require => [
+      Package["hadoop-yarn-resourcemanager"],
+      Class['bigtop_pp::jdk']
+    ],
   }
   Kerberos::Host_keytab <| tag == "mapreduce" |> -> Service["hadoop-yarn-resourcemanager"]
 }

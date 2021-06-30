@@ -66,7 +66,10 @@ class hadoop::namenode ( $nfs_server = "", $nfs_path = "",
     ensure => running,
     hasstatus => true,
     subscribe => [Package["hadoop-hdfs-namenode"], File["/etc/hadoop/conf/core-site.xml"], File["/etc/hadoop/conf/hdfs-site.xml"], File["/etc/hadoop/conf/hadoop-env.sh"]],
-    require => [Package["hadoop-hdfs-namenode"]],
+    require => [
+      Package["hadoop-hdfs-namenode"],
+      Class['bigtop_pp::jdk']
+    ],
   } 
   Kerberos::Host_keytab <| title == "hdfs" |> -> Exec <| tag == "namenode-format" |> -> Service["hadoop-hdfs-namenode"]
 
@@ -80,7 +83,10 @@ class hadoop::namenode ( $nfs_server = "", $nfs_path = "",
       ensure => running,
       hasstatus => true,
       subscribe => [Package["hadoop-hdfs-zkfc"], File["/etc/hadoop/conf/core-site.xml"], File["/etc/hadoop/conf/hdfs-site.xml"], File["/etc/hadoop/conf/hadoop-env.sh"]],
-      require => [Package["hadoop-hdfs-zkfc"]],
+      require => [
+        Package["hadoop-hdfs-zkfc"],
+        Class['bigtop_pp::jdk']
+      ],
     } 
     Service <| title == "hadoop-hdfs-zkfc" |> -> Service <| title == "hadoop-hdfs-namenode" |>
   }

@@ -12,7 +12,11 @@ class hadoop::nodemanager {
     hasstatus => true,
     subscribe => [Package["hadoop-yarn-nodemanager"], File["/etc/hadoop/conf/hadoop-env.sh"], 
                   File["/etc/hadoop/conf/yarn-site.xml"], File["/etc/hadoop/conf/core-site.xml"]],
-    require => [ Package["hadoop-yarn-nodemanager"], File[$hadoop::common_yarn::yarn_data_dirs] ],
+    require => [
+      Package["hadoop-yarn-nodemanager"],
+      File[$hadoop::common_yarn::yarn_data_dirs],
+      Class['bigtop_pp::jdk']
+    ],
   }
   Kerberos::Host_keytab <| tag == "mapreduce" |> -> Service["hadoop-yarn-nodemanager"]
 

@@ -13,7 +13,10 @@ class hadoop::historyserver {
     hasstatus => true,
     subscribe => [Package["hadoop-mapreduce-historyserver"], File["/etc/hadoop/conf/hadoop-env.sh"], 
                   File["/etc/hadoop/conf/yarn-site.xml"], File["/etc/hadoop/conf/core-site.xml"]],
-    require => [Package["hadoop-mapreduce-historyserver"]],
+    require => [
+      Package["hadoop-mapreduce-historyserver"],
+      Class['bigtop_pp::jdk']
+    ],
   }
   Kerberos::Host_keytab <| tag == "mapreduce" |> -> Service["hadoop-mapreduce-historyserver"]
 }

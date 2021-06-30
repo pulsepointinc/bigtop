@@ -18,7 +18,12 @@ class hadoop::datanode (
     ensure => running,
     hasstatus => true,
     subscribe => [Package["hadoop-hdfs-datanode"], File["/etc/hadoop/conf/core-site.xml"], File["/etc/hadoop/conf/hdfs-site.xml"], File["/etc/hadoop/conf/hadoop-env.sh"]],
-    require => [ Package["hadoop-hdfs-datanode"], File["/etc/default/hadoop-hdfs-datanode"], File[$hadoop::common_hdfs::hdfs_data_dirs] ],
+    require => [
+      Package["hadoop-hdfs-datanode"],
+      File["/etc/default/hadoop-hdfs-datanode"],
+      File[$hadoop::common_hdfs::hdfs_data_dirs],
+      Class['bigtop_pp::jdk']
+    ],
   }
   Kerberos::Host_keytab <| title == "hdfs" |> -> Service["hadoop-hdfs-datanode"]
   Service<| title == 'hadoop-hdfs-namenode' |> -> Service['hadoop-hdfs-datanode']
