@@ -8,29 +8,36 @@ class bigtop_pp::node_with_roles ($roles = hiera("bigtop::roles")) inherits bigt
     }
   }
 
+#  $modules = [
+#    "alluxio",
+#    "flink",
+#    "hadoop",
+#    "hadoop_hbase",
+#    "hadoop_hive",
+#    "hadoop_oozie",
+#    "hadoop_zookeeper",
+#    "hcatalog",
+#    "livy",
+#    "solr",
+#    "spark",
+#    "tez",
+#    "ycsb",
+#    "kerberos",
+#    "zeppelin",
+#    "kafka",
+#    "gpdb",
+#    "ambari",
+#    "bigtop_utils",
+#    "elasticsearch",
+#    "logstash",
+#    "kibana",
+#  ]
+
   $modules = [
-    "alluxio",
-    "flink",
     "hadoop",
-    "hadoop_hbase",
-    "hadoop_hive",
-    "hadoop_oozie",
     "hadoop_zookeeper",
-    "hcatalog",
-    "livy",
-    "solr",
-    "spark",
-    "tez",
-    "ycsb",
     "kerberos",
-    "zeppelin",
-    "kafka",
-    "gpdb",
-    "ambari",
-    "bigtop_utils",
-    "elasticsearch",
-    "logstash",
-    "kibana",
+    "bigtop_utils"
   ]
 
   bigtop_pp::node_with_roles::deploy_module { $modules:
