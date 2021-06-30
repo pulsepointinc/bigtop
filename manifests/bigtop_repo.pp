@@ -46,7 +46,7 @@ class bigtop_pp::bigtop_repo {
           }
         }
       }
-      Yumrepo<||> -> Package<||>
+      Yumrepo["Bigtop_$count"] -> Package<||>
     }
 
     /(Ubuntu|Debian)/: {
