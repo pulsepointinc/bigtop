@@ -111,4 +111,36 @@ class bigtop_pp::common {
       client => ["kibana-client"],
     },
   }
+
+#  $modules = [
+#    "alluxio",
+#    "flink",
+#    "hadoop",
+#    "hadoop_hbase",
+#    "hadoop_hive",
+#    "hadoop_oozie",
+#    "hadoop_zookeeper",
+#    "hcatalog",
+#    "livy",
+#    "solr",
+#    "spark",
+#    "tez",
+#    "ycsb",
+#    "kerberos",
+#    "zeppelin",
+#    "kafka",
+#    "gpdb",
+#    "ambari",
+#    "bigtop_utils",
+#    "elasticsearch",
+#    "logstash",
+#    "kibana",
+#  ]
+
+  $modules = [
+    "hadoop",
+    "hadoop_zookeeper",
+    "kerberos",
+    "bigtop_utils"
+  ]
 }
