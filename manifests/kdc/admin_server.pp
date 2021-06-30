@@ -1,4 +1,4 @@
-class kerberos::admin_server inherits kerberos::kdc {
+class kerberos::kdc::admin_server inherits kerberos::kdc {
 
   package { "$package_name_admin":
     ensure => installed,
