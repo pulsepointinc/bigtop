@@ -15,15 +15,4 @@
 
 class bigtop_utils {
 
-  class deploy ($roles) {
-    if ("bigtop-utils" in $roles) {
-       include bigtop_utils::client
-    }
-  }
-
-  class client {
-    package { "bigtop-utils":
-      ensure => latest,
-    }
-  }
 }
