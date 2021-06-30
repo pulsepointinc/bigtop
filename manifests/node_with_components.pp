@@ -47,7 +47,7 @@ class bigtop_pp::node_with_components inherits bigtop_pp::hadoop_cluster_node {
 
   $roles = get_roles($components, $role_types, $roles_map)
 
-  class { 'node_with_roles':
+  class { 'bigtop_pp::node_with_roles':
     roles => $roles,
   }
 
