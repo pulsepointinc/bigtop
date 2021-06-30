@@ -1,5 +1,5 @@
 class kerberos::kdc inherits kerberos::krb_site {
-  Class['kerberos::kdc'] -> Class['hadoop_cluster_node']
+  Class['kerberos::kdc'] -> Class['hadoop::hadoop_cluster_node']
 
   package { $package_name_kdc:
     ensure => installed,
