@@ -16,49 +16,6 @@
 class bigtop_pp {
   require bigtop_pp::jdk
 
-  $bigtop_services = [
-#    'livy-server',
-#    'elasticsearch',
-#    'spark-master',
-#    'spark-worker',
-#    'spark-history-server',
-#    'zeppelin',
-#    'hcatalog-server',
-#    'webhcat-server',
-#    'kafka-server',
-#    'oozie',
-#    'solr-server',
-    'zookeeper-server',
-    'hadoop-hdfs-datanode',
-    'hadoop-httpfs',
-    'hadoop-kms',
-    'hadoop-hdfs-namenode',
-    'hadoop-hdfs-zkfc',
-    'hadoop-hdfs-secondarynamenode',
-    'hadoop-hdfs-journalnode',
-    'hadoop-yarn-resourcemanager',
-    'hadoop-yarn-proxyserver',
-    'hadoop-mapreduce-historyserver',
-    'hadoop-yarn-nodemanager',
-#    'ambari-server',
-#    'ambari-agent',
-#    'alluxio-master',
-#    'alluxio-job-master',
-#    'alluxio-worker',
-#    'alluxio-job-worker',
-#    'hbase-thrift',
-#    'hbase-regionserver',
-#    'hbase-master',
-#    'hive-server2',
-#    'hive-metastore',
-#    'flink-jobmanager',
-#    'flink-taskmanager',
-  ]
-
-  $bigtop_services.each |$service_name| {
-    Class['bigtop_pp::jdk'] -> Service[$service_name]
-  }
-
   $provision_repo = hiera("bigtop::provision_repo", true)
   if ($provision_repo) {
     require bigtop_pp::bigtop_repo
