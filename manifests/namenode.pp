@@ -37,7 +37,7 @@ class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
         ensure => directory,
       }
 
-      if ($nfs_server) {
+      if ($nfs_server != Undef) {
         if (!$nfs_path) {
           fail("No nfs share specified for shared edits dir")
         }
