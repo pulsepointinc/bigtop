@@ -1,4 +1,4 @@
-class hadoop::namenode ( $nfs_server = "", $nfs_path = "",
+class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
     $standby_bootstrap_retries = 10,
     # milliseconds
     $standby_bootstrap_retry_interval = 30000) {
