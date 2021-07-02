@@ -34,7 +34,9 @@ class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
     if (! ('qjournal://' in $hadoop::common_hdfs::shared_edits_dir)) {
       hadoop::create_storage_dir { $hadoop::common_hdfs::shared_edits_dir: } ->
       file { $hadoop::common_hdfs::shared_edits_dir:
-        ensure => directory,
+        owner  => 'hdfs',
+        group  => 'hdfs',
+        ensure => directory
       }
 
       if ($nfs_server != Undef) {
