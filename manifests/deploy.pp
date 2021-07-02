@@ -53,4 +53,8 @@ class hadoop::deploy ($roles) {
   if ("hadoop-client" in $roles) {
     include hadoop::client
   }
+
+  if ("journalnode" in $roles) {
+    include hadoop::journalnode
+  }
 }
