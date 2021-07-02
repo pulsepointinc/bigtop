@@ -91,9 +91,6 @@ class hadoop::common_hdfs ($ha = "disabled",
       require => File[$ssh_user_keydir],
     }
   }
-  if ($hadoop_security_authentication == "kerberos" and $ha != "disabled") {
-    fail("High-availability secure clusters are not currently supported")
-  }
 
   package { "hadoop-hdfs":
     ensure => latest,
