@@ -46,7 +46,7 @@ class hadoop_zookeeper::server($myid,
     require => Package["zookeeper-server"],
   }
 
-  notify { "kerberos_realm ${kerberos_realm}": }
+  notify { "kerberos_realm server ${kerberos_realm}": }
   if ($kerberos_realm and $kerberos_realm != "") {
     require kerberos::client
 
