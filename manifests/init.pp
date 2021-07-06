@@ -16,4 +16,5 @@
 class hadoop_zookeeper (
   $kerberos_realm = ""
 ) {
+  notify { "kerberos_realm ${kerberos_realm}": }
 }
