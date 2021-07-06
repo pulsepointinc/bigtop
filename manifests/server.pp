@@ -2,13 +2,14 @@ class hadoop_zookeeper::server($myid,
               $port = "2181",
               $datadir = "/var/lib/zookeeper",
               $ensemble = [$myid, "localhost:2888:3888"],
-              $kerberos_realm = $hadoop_zookeeper::kerberos_realm,
               $client_bind_addr = "",
               $autopurge_purge_interval = "24",
               $autopurge_snap_retain_count = "3",
 ) inherits hadoop_zookeeper {
   require hadoop_zookeeper
   include hadoop_zookeeper::common
+
+  $kerberos_realm = $hadoop_zookeeper::kerberos_realm
 
   package { "zookeeper-server":
     ensure => latest,

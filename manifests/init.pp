@@ -14,7 +14,6 @@
 # limitations under the License.
 
 class hadoop_zookeeper (
-  $kerberos_realm = "",
+  $kerberos_realm = ""
 ) {
-
 }

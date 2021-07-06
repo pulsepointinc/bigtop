@@ -1,8 +1,9 @@
 class hadoop_zookeeper::client (
-  $kerberos_realm = $hadoop_zookeeper::kerberos_realm,
 ) inherits hadoop_zookeeper {
   require hadoop_zookeeper
   include hadoop_zookeeper::common
+
+  $kerberos_realm = $hadoop_zookeeper::kerberos_realm
 
   package { "zookeeper":
     ensure => latest,

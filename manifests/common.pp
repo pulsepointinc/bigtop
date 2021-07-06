@@ -1,7 +1,8 @@
 class hadoop_zookeeper::common (
-  $kerberos_realm = $hadoop_zookeeper::kerberos_realm,
 ) inherits hadoop_zookeeper {
   require hadoop_zookeeper
+
+  $kerberos_realm = $hadoop_zookeeper::kerberos_realm
 
   if ($kerberos_realm and $kerberos_realm != "") {
     file { '/etc/zookeeper/conf/java.env':
