@@ -108,8 +108,7 @@ class hadoop::common_hdfs ($ha = "disabled",
       require => Package["hadoop-hdfs"],
     }
 
-    include hadoop_zookeeper::keytab
-    Class['hadoop_zookeeper::client'] -> Class['hadoop_zookeeper::keytab']
+    require hadoop_zookeeper::keytab
   }
 
   file {
