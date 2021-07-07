@@ -107,6 +107,11 @@ class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
 
     if ($hadoop::common_hdfs::ha != "disabled") {
       if ($hadoop::common_hdfs::ha == "auto") {
+        if ($hadoop::hadoop_security_authentication == "kerberos") {
+          require hadoop::kinit_zookeeper
+          Exec["Zookeeper kinit"] -> Exec["namenode zk format"]
+        }
+
         exec { "namenode zk format":
           user => "hdfs",
           command => "/bin/bash -c 'hdfs zkfc -formatZK -nonInteractive >> /var/lib/hadoop-hdfs/zk.format.log 2>&1'",
