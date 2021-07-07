@@ -110,14 +110,26 @@ class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
         if ($hadoop::hadoop_security_authentication == "kerberos") {
           require hadoop::kinit_zookeeper
           Exec["Zookeeper kinit"] -> Exec["namenode zk format"]
-        }
 
-        exec { "namenode zk format":
-          user => "hdfs",
-          command => "/bin/bash -c 'hdfs zkfc -formatZK -nonInteractive >> /var/lib/hadoop-hdfs/zk.format.log 2>&1'",
-          returns => [ 0, 2],
-          require => [ Package["hadoop-hdfs-zkfc"], File["/etc/hadoop/conf/hdfs-site.xml"] ],
-          tag     => "namenode-format",
+          exec { "namenode zk format":
+            user => "hdfs",
+            command => "/bin/bash -c 'hdfs zkfc -D dfs.namenode.keytab.file='/var/lib/bigtop_keytabs/zookeeper.keytab' -D dfs.namenode.kerberos.principal='zookeeper/${:fqdn}@${hadoop::common_hdfs::kerberos_realm}' -Djava.security.auth.login.config=/etc/zookeeper/conf/client-jaas.conf -formatZK -nonInteractive >> /var/lib/hadoop-hdfs/zk.format.log 2>&1'",
+            returns => [ 0, 2],
+            require => [
+              Package["hadoop-hdfs-zkfc"],
+              File["/etc/hadoop/conf/hdfs-site.xml"],
+              Class["hadoop_zookeeper::client"]
+            ],
+            tag     => "namenode-format",
+          }
+        } else {
+          exec { "namenode zk format":
+            user => "hdfs",
+            command => "/bin/bash -c 'hdfs zkfc -formatZK -nonInteractive >> /var/lib/hadoop-hdfs/zk.format.log 2>&1'",
+            returns => [ 0, 2],
+            require => [ Package["hadoop-hdfs-zkfc"], File["/etc/hadoop/conf/hdfs-site.xml"] ],
+            tag     => "namenode-format",
+          }
         }
         Service <| title == "zookeeper-server" |> -> Exec <| title == "namenode zk format" |>
         Exec <| title == "namenode zk format" |>  -> Service <| title == "hadoop-hdfs-zkfc" |>
