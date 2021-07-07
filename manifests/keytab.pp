@@ -6,7 +6,6 @@ class hadoop_zookeeper::keytab () {
   $kerberos_realm = $hadoop_zookeeper::kerberos_realm
 
   kerberos::host_keytab { 'zookeeper':
-    spnego  => true,
-    require => Package['zookeeper']
+    spnego  => true
   }
 }

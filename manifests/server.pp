@@ -50,8 +50,6 @@ class hadoop_zookeeper::server($myid,
     require kerberos::client
     require hadoop_zookeeper::keytab
 
-    Class['hadoop_zookeeper::keytab'] -> Service['zookeeper-server']
-
     file { "/etc/zookeeper/conf/server-jaas.conf":
       content => template("hadoop_zookeeper/server-jaas.conf"),
       require => Package["zookeeper-server"],

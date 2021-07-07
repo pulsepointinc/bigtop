@@ -7,8 +7,7 @@ class hadoop_zookeeper::client (
 
   if ($kerberos_realm and $kerberos_realm != "") {
     file { '/etc/zookeeper/conf/client-jaas.conf':
-      content => template('hadoop_zookeeper/client-jaas.conf'),
-      require => Package['zookeeper'],
+      content => template('hadoop_zookeeper/client-jaas.conf')
     }
   }
 }
