@@ -109,8 +109,8 @@ class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
       if ($hadoop::common_hdfs::ha == "auto") {
         if ($hadoop::hadoop_security_authentication == "kerberos") {
           exec { "namenode zk format":
-            user => "hdfs",
-            command => "/bin/bash -c 'hdfs zkfc -Ddfs.namenode.keytab.file='/var/lib/bigtop_keytabs/zookeeper.keytab' -Ddfs.namenode.kerberos.principal='zookeeper/${::fqdn}@${hadoop::common_hdfs::kerberos_realm}' -Djava.security.auth.login.config='/etc/zookeeper/conf/client-jaas.conf' -formatZK -nonInteractive >> /var/lib/hadoop-hdfs/zk.format.log 2>&1'",
+            user => "zookeeper",
+            command => "/bin/bash -c 'hdfs zkfc -Ddfs.namenode.keytab.file='/etc/zookeeper.keytab' -Ddfs.namenode.kerberos.principal='zookeeper/${::fqdn}@${hadoop::common_hdfs::kerberos_realm}' -Djava.security.auth.login.config='/etc/zookeeper/conf/client-jaas.conf' -formatZK -nonInteractive >> /var/lib/hadoop-hdfs/zk.format.log 2>&1'",
             returns => [ 0, 2 ],
             require => [
               Package["hadoop-hdfs-zkfc"],
