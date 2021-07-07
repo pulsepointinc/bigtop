@@ -48,12 +48,9 @@ class hadoop_zookeeper::server($myid,
 
   if ($kerberos_realm and $kerberos_realm != "") {
     require kerberos::client
+    require hadoop_zookeeper::keytab
 
-    kerberos::host_keytab { "zookeeper":
-      spnego  => true,
-      require => Package["zookeeper-server"],
-      before  => Service["zookeeper-server"],
-    }
+    Class['hadoop_zookeeper::keytab'] -> Service['zookeeper-server']
 
     file { "/etc/zookeeper/conf/server-jaas.conf":
       content => template("hadoop_zookeeper/server-jaas.conf"),
