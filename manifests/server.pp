@@ -7,7 +7,7 @@ class hadoop_zookeeper::server($myid,
               $autopurge_snap_retain_count = "3",
 ) inherits hadoop_zookeeper {
   require hadoop_zookeeper
-  include hadoop_zookeeper::common
+  require hadoop_zookeeper::common
 
   $kerberos_realm = $hadoop_zookeeper::kerberos_realm
 

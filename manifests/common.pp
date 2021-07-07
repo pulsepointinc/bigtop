@@ -4,6 +4,11 @@ class hadoop_zookeeper::common (
 
   $kerberos_realm = $hadoop_zookeeper::kerberos_realm
 
+  package { "zookeeper":
+    ensure => latest,
+    require => Package["jdk"],
+  }
+
   if ($kerberos_realm and $kerberos_realm != "") {
     file { '/etc/zookeeper/conf/java.env':
       source => 'puppet:///modules/hadoop_zookeeper/java.env',
