@@ -107,6 +107,11 @@ class hadoop::common_hdfs ($ha = "disabled",
       # wan't to give the keytab to.
       require => Package["hadoop-hdfs"],
     }
+
+    kerberos::host_keytab { "zookeeper":
+      spnego  => true,
+      require => Package["zookeeper-server"]
+    }
   }
 
   file {
