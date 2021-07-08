@@ -173,6 +173,10 @@
     <name>dfs.secondary.namenode.kerberos.https.principal</name>
     <value>host/_HOST@<%= @kerberos_realm %></value>
   </property>
+  <property>
+    <name>dfs.secondary.namenode.kerberos.internal.spnego.principal</name>
+    <value>${dfs.web.authentication.kerberos.principal}</value>
+  </property>
 
 <%   end -%>
 <% end -%>
@@ -210,6 +214,10 @@
   <property>
     <name>dfs.web.authentication.kerberos.principal</name>
     <value>HTTP/_HOST@<%= @kerberos_realm %></value>
+  </property>
+  <property>
+    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+    <value>${dfs.web.authentication.kerberos.principal}</value>
   </property>
 
   <!-- DataNode security config -->
@@ -354,6 +362,10 @@
   <property>
     <name>dfs.journalnode.kerberos.principal</name>
     <value>hdfs/_HOST@<%= @kerberos_realm %></value>
+  </property>
+  <property>
+    <name>dfs.journalnode.kerberos.internal.spnego.principal</name>
+    <value>${dfs.web.authentication.kerberos.principal}</value>
   </property>
 
 <%   end -%>
