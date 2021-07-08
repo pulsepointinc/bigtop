@@ -14,7 +14,6 @@ class hadoop_zookeeper::common (
       source => 'puppet:///modules/hadoop_zookeeper/java.env',
     }
     Package<| title == 'zookeeper' |> -> File['/etc/zookeeper/conf/java.env']
-    Package<| title == 'zookeeper-server' |> -> File['/etc/zookeeper/conf/java.env']
     File['/etc/zookeeper/conf/java.env'] ~> Service<| title == 'zookeeper-server' |>
   }
 }
