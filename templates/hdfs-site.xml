@@ -346,6 +346,17 @@
     <value><%= @journalnode_host %>:<%= @journalnode_https_port %></value>
   </property>
 
+  <%   if @hadoop_security_authentication == "kerberos" -%>
+  <property>
+    <name>dfs.journalnode.keytab.file</name>
+    <value>/etc/hdfs.keytab</value> <!-- path to the HDFS keytab -->
+  </property>
+  <property>
+    <name>dfs.journalnode.kerberos.principal</name>
+    <value>hdfs/_HOST@<%= @kerberos_realm %></value>
+  </property>
+
+<%   end -%>
 <%   end -%>
 <% end -%>
 
