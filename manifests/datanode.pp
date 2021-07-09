@@ -14,14 +14,26 @@ class hadoop::datanode (
       require => [Package["hadoop-hdfs-datanode"]],
   }
 
-  file_line { 'patch_init_d_hadoop-hdfs-datanode':
-    ensure   => present,
-    replace  => true,
-    multiple => false,
-    path     => '/etc/rc.d/init.d/hadoop-hdfs-datanode',
-    match    => '^# pidfile: /var/run/hadoop-hdfs/hadoop-hdfs-datanode.pid$',
-    line     => '# pidfile: /var/run/hadoop-hdfs/hadoop-hdfs-root-datanode.pid',
-    require  => Package['hadoop-hdfs-datanode']
+  if ($hadoop_security_authentication == 'kerberos') {
+    file_line { 'patch_init_d_hadoop-hdfs-datanode_0':
+      ensure   => present,
+      replace  => true,
+      multiple => false,
+      path     => '/etc/rc.d/init.d/hadoop-hdfs-datanode',
+      match    => '^# pidfile: /var/run/hadoop-hdfs/hadoop-hdfs-datanode.pid$',
+      line     => '# pidfile: /var/run/hadoop-hdfs/hadoop-hdfs-root-datanode.pid',
+      require  => Package['hadoop-hdfs-datanode']
+    }
+
+    file_line { 'patch_init_d_hadoop-hdfs-datanode_1':
+      ensure   => present,
+      replace  => true,
+      multiple => false,
+      path     => '/etc/rc.d/init.d/hadoop-hdfs-datanode',
+      match    => '^PIDFILE="/var/run/hadoop-hdfs/hadoop-hdfs-datanode.pid"$',
+      line     => 'PIDFILE="/var/run/hadoop-hdfs/hadoop-hdfs-root-datanode.pid"',
+      require  => Package['hadoop-hdfs-datanode']
+    }
   }
 
   service { "hadoop-hdfs-datanode":
