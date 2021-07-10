@@ -30,8 +30,6 @@ class hadoop::deploy ($roles) {
 
   if ("resourcemanager" in $roles) {
     include hadoop::resourcemanager
-    include hadoop::historyserver
-    include hadoop::proxyserver
 
     if ("nodemanager" in $roles) {
       Class['Hadoop::Resourcemanager'] -> Class['Hadoop::Nodemanager']
@@ -56,5 +54,12 @@ class hadoop::deploy ($roles) {
 
   if ("journalnode" in $roles) {
     include hadoop::journalnode
+  }
+
+  if ("historyserver" in $roles) {
+    include hadoop::historyserver
+  }
+  if ("proxyserver" in $roles) {
+    include hadoop::proxyserver
   }
 }
