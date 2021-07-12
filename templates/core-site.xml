@@ -77,6 +77,17 @@
   </property>
 <% end %>
 
+<% if @hadoop_security_auth_to_local_msad_realm_re %>
+  <property>
+    <name>hadoop.security.auth_to_local</name>
+    <value>
+      RULE:[1:$1@$0]<%= @hadoop_security_auth_to_local_msad_realm_re %>
+      RULE:[2:$1@$0]<%= @hadoop_security_auth_to_local_msad_realm_re %>
+      DEFAULT
+    </value>
+  </property>
+<% end %>
+
 <% if @hadoop_core_proxyusers %>
 <% @hadoop_core_proxyusers.sort.each do |superuser, data| %>
   <property>
