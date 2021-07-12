@@ -3,7 +3,11 @@ class kerberos::krb_site ($domain = inline_template('<%= @domain %>'),
     $kdc_server = 'localhost',
     $kdc_port = '88',
     $admin_port = 749,
-    $keytab_export_dir = "/var/lib/bigtop_keytabs") {
+    $keytab_export_dir = "/var/lib/bigtop_keytabs",
+    String $msad_realm = Undef,
+    String $msad_server = Undef,
+    String msad_def_domain = Undef
+) {
 
   case $operatingsystem {
       'ubuntu','debian': {
