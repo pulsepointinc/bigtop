@@ -1,11 +1,16 @@
-class kerberos::kdc inherits kerberos::krb_site (
-  $slave_initially = false
-) {
+class kerberos::kdc_slave inherits kerberos::krb_site {
   Class['kerberos::kdc'] -> Class['bigtop_pp::hadoop_cluster_node']
 
   package { $package_name_kdc:
     ensure => installed,
   }
+
+    kerberos::host_keytab { 'kdc_slave':
+      # we don't actually need this package as long as we don't put the
+      # keytab in a directory managed by it. But it creates user mapred whom we
+      # wan't to give the keytab to.
+      require => Package["hadoop-yarn"],
+    }
 
   file { $kdc_etc_path:
   	ensure => directory,
@@ -29,18 +34,16 @@ class kerberos::kdc inherits kerberos::krb_site (
     mode => "0644",
   }
 
-  if $slave_initially == false { 
-    exec { 'kdb5_util':
-      path => $exec_path,
-      command => "rm -f /etc/kadm5.keytab ; kdb5_util -P cthulhu -r ${realm} create -s && kadmin.local -q 'cpw -pw secure kadmin/admin'",
-      creates => "${kdc_etc_path}/stash",
-      subscribe => File["${kdc_etc_path}/kdc.conf"],
-      require => [
-        Package["$package_name_kdc"],
-        File["${kdc_etc_path}/kdc.conf"],
-        File['/etc/krb5.conf']
-      ]
-    }
+  exec { "kdb5_util":
+    path => $exec_path,
+    command => "rm -f /etc/kadm5.keytab ; kdb5_util -P cthulhu -r ${realm} create -s && kadmin.local -q 'cpw -pw secure kadmin/admin'",
+    
+    creates => "${kdc_etc_path}/stash",
+
+    subscribe => File["${kdc_etc_path}/kdc.conf"],
+    # refreshonly => true, 
+
+    require => [Package["$package_name_kdc"], File["${kdc_etc_path}/kdc.conf"], File["/etc/krb5.conf"]],
   }
 
   service { $service_name_kdc:
@@ -48,20 +51,5 @@ class kerberos::kdc inherits kerberos::krb_site (
     require => [Package["$package_name_kdc"], File["${kdc_etc_path}/kdc.conf"], Exec["kdb5_util"]],
     subscribe => [File["${kdc_etc_path}/kadm5.acl"], File["${kdc_etc_path}/kdc.conf"]],
     hasrestart => true,
-  }
-
-  # TODO: fix params
-  service { $service_name_kprop:
-    ensure     => running,
-    require    => [
-      Package["$package_name_kdc"],
-      File["${kdc_etc_path}/kdc.conf"],
-      Exec["kdb5_util"]
-    ],
-    subscribe  => [
-      File["${kdc_etc_path}/kadm5.acl"],
-      File["${kdc_etc_path}/kdc.conf"]
-    ],
-    hasrestart => true
   }
 }

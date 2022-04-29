@@ -15,6 +15,7 @@ class kerberos::krb_site ($domain = inline_template('<%= @domain %>'),
           $service_name_kdc    = 'krb5-kdc'
           $package_name_admin  = 'krb5-admin-server'
           $service_name_admin  = 'krb5-admin-server'
+          $service_name_kprop  = 'krb5-kpropd'
           $package_name_client = 'krb5-user'
           $exec_path           = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
           $kdc_etc_path        = '/etc/krb5kdc'
@@ -24,6 +25,7 @@ class kerberos::krb_site ($domain = inline_template('<%= @domain %>'),
       default: {
           $package_name_kdc    = 'krb5-server'
           $service_name_kdc    = 'krb5kdc'
+          $service_name_kprop  = 'kprop'
           $package_name_admin  = 'krb5-libs'
           $service_name_admin  = 'kadmin'
           $package_name_client = 'krb5-workstation'
