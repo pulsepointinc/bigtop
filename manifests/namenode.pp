@@ -14,7 +14,7 @@ class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
     }
 
     file { $hadoop::common_hdfs::sshfence_keypath:
-      content => file($hadoop::common_hdfs::sshfence_privkey),
+      content => $hadoop::common_hdfs::sshfence_privkey,
       owner   => 'hdfs',
       group   => 'hdfs',
       mode    => '0600',
@@ -23,7 +23,7 @@ class hadoop::namenode ( $nfs_server = Undef, $nfs_path = "",
     }
 
     file { "$hadoop::common_hdfs::sshfence_keydir/authorized_keys":
-      content => file($hadoop::common_hdfs::sshfence_pubkey),
+      content => $hadoop::common_hdfs::sshfence_pubkey,
       owner   => 'hdfs',
       group   => 'hdfs',
       mode    => '0600',
