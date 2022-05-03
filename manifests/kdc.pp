@@ -1,6 +1,6 @@
-class kerberos::kdc inherits kerberos::krb_site (
+class kerberos::kdc (
   $slave_initially = false
-) {
+) inherits kerberos::krb_site {
   Class['kerberos::kdc'] -> Class['bigtop_pp::hadoop_cluster_node']
 
   package { $package_name_kdc:
