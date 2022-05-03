@@ -1,8 +1,11 @@
-define kerberos::host_keytab($princs = [ $title ], $spnego = disabled,
-  $owner = $title, $group = "", $mode = "0400",
+define kerberos::host_keytab (
+  $princs = [ $title ],
+  $spnego = disabled,
+  $owner = $title,
+  $group = "",
+  $mode = "0400",
+  Optional[String] $keytab = "/etc/${title}.keytab"
 ) {
-  $keytab = "/etc/$title.keytab"
-
   $internal_princs = $spnego ? {
     true      => [ 'HTTP' ],
     'enabled' => [ 'HTTP' ],
