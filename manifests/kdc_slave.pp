@@ -33,6 +33,13 @@ class kerberos::kdc_slave inherits kerberos::krb_site {
     group => "root",
     mode => "0644",
   }
+  file { "${kdc_etc_path}/kpropd.acl":
+    content => $kpropd_acl_contents,
+    require => Package["$package_name_kdc"],
+    owner => "root",
+    group => "root",
+    mode => "0644",
+  }
 
   exec { "kdb5_util":
     path => $exec_path,

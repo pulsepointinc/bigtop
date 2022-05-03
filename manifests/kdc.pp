@@ -28,6 +28,13 @@ class kerberos::kdc (
     group => "root",
     mode => "0644",
   }
+  file { "${kdc_etc_path}/kpropd.acl":
+    content => $kpropd_acl_contents,
+    require => Package["$package_name_kdc"],
+    owner => "root",
+    group => "root",
+    mode => "0644",
+  }
 
   if $slave_initially == false { 
     exec { 'kdb5_util':
@@ -56,11 +63,13 @@ class kerberos::kdc (
     require    => [
       Package["$package_name_kdc"],
       File["${kdc_etc_path}/kdc.conf"],
-      Exec["kdb5_util"]
+      Exec["kdb5_util"],
+      File["${kdc_etc_path}/kpropd.acl"]
     ],
     subscribe  => [
       File["${kdc_etc_path}/kadm5.acl"],
-      File["${kdc_etc_path}/kdc.conf"]
+      File["${kdc_etc_path}/kdc.conf"],
+      File["${kdc_etc_path}/kpropd.acl"]
     ],
     hasrestart => true
   }
