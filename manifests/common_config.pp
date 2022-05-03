@@ -24,4 +24,9 @@ class hadoop_hive::common_config (
     content => template('hadoop_hive/hive-site.xml'),
     require => Package['hive'],
   }
+
+  file { '/etc/hive/conf/hive-env.sh':
+    content => template('hadoop_hive/hive-env.sh'),
+    require => Package['hive'],
+  }
 }
