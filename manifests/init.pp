@@ -25,6 +25,7 @@ class hadoop ($hadoop_security_authentication = "simple",
   $generate_secrets = false,
   $kms_host = undef,
   $kms_port = undef,
+  $alluxio_masters = undef
 ) {
 
   include stdlib

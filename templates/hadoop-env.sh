@@ -88,6 +88,11 @@
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${TEZ_CONF_DIR}:${TEZ_JARS}/*:${TEZ_JARS}/lib/*
 
 <% end -%>
+
+<% if @alluxio_masters %>
+export HADOOP_CLASSPATH=/usr/local/lib/hive/alluxio-client.jar:$HADOOP_CLASSPATH
+<% end -%>
+
 ### WARNING: the following is NOT really optional. It is a shame that stock Hadoop
 ### hadoop_env.sh doesn't make it clear -- you can NOT turn  com.sun.management.jmxremote off
 ### and have a working Hadoop cluster.

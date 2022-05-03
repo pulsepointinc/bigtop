@@ -175,4 +175,68 @@
     <value>kms://http@<%= @kms_host %>:<%= @kms_port %>/kms</value>
   </property>
 <% end -%>
+
+<% if @alluxio_masters %>
+  <property>
+    <name>fs.alluxio.impl</name>
+    <value>alluxio.hadoop.FileSystem</value>
+  </property>
+  <property>
+    <name>alluxio.security.authentication.type</name>
+    <value>SIMPLE</value>
+  </property>
+  <property>
+    <name>alluxio.security.authorization.permission.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>alluxio.security.underfs.hdfs.impersonation.enabled</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>alluxio.security.login.username</name>
+    <value>hdfs</value>
+  </property>
+  <property>
+    <name>alluxio.security.login.impersonation.username</name>
+    <value>_NONE_</value>
+  </property>
+  <property>
+    <name>alluxio.user.metrics.collection.enabled</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>alluxio.worker.data.server.domain.socket.address</name>
+    <value>/var/run/alluxio-worker</value>
+  </property>
+  <property>
+    <name>alluxio.worker.data.server.domain.socket.as.uuid</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>alluxio.user.file.metadata.sync.interval</name>
+    <value>15m</value>
+  </property>
+  <property>
+    <name>alluxio.underfs.hdfs.remote</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>alluxio.user.ufs.block.read.location.policy</name>
+    <value>alluxio.client.block.policy.DeterministicHashPolicy</value>
+  </property>
+  <property>
+    <name>alluxio.user.ufs.block.read.location.policy.deterministic.hash.shards</name>
+    <value>3</value>
+  </property>
+  <property>
+    <name>alluxio.master.journal.type</name>
+    <value>EMBEDDED</value>
+  </property>
+  <property>
+    <name>alluxio.master.embedded.journal.addresses</name>
+    <value><%= @alluxio_masters %></value>
+  </property>
+<% end -%>
+
 </configuration>
