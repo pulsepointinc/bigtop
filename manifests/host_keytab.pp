@@ -19,8 +19,11 @@ define kerberos::host_keytab (
     }.join(\"\n\")
   %>")
 
-  $uniq_princs = $princs.unique
-  realize(Kerberos::Principal[$uniq_princs])
+  $princs.each |$curr_princ| {
+    unless defined(Kerberos::Principal[$curr_princ]) {
+      kerberos::principal { $curr_princ:
+    }
+  }
 
   exec { "ktinject.$title":
     path     => $kerberos::krb_site::exec_path,
