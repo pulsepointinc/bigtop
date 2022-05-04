@@ -22,6 +22,7 @@ define kerberos::host_keytab (
   $princs.each |$curr_princ| {
     unless defined(Kerberos::Principal[$curr_princ]) {
       kerberos::principal { $curr_princ:
+      }
     }
   }
 
