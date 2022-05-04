@@ -141,6 +141,7 @@ class bigtop_pp::common {
     "hadoop",
     "hadoop_zookeeper",
     "kerberos",
-    "bigtop_utils"
+    "bigtop_utils",
+    "hadoop_hive"
   ]
 }
