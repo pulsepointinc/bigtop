@@ -49,7 +49,8 @@ class hadoop::common_hdfs ($ha = "disabled",
     $namenode_datanode_registration_ip_hostname_check = undef,
     $kms_host = $hadoop::kms_host,
     $kms_port = $hadoop::kms_port,
-    String $hadoop_security_auth_to_local_msad_realm_re = Undef
+    String $hadoop_security_auth_to_local_msad_realm_re = Undef,
+    String $hadoop_security_auth_to_local_local_realm_re = Undef
 ) inherits hadoop {
 
   $sshfence_keydir  = "$hadoop_ha_sshfence_user_home/.ssh"

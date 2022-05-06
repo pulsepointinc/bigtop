@@ -83,6 +83,8 @@
     <value>
       RULE:[1:$1@$0]<%= @hadoop_security_auth_to_local_msad_realm_re %>
       RULE:[2:$1@$0]<%= @hadoop_security_auth_to_local_msad_realm_re %>
+      RULE:[1:$1@$0]<%= @hadoop_security_auth_to_local_local_realm_re %>
+      RULE:[2:$1@$0]<%= @hadoop_security_auth_to_local_local_realm_re %>
       DEFAULT
     </value>
   </property>
