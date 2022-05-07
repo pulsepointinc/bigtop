@@ -20,7 +20,7 @@ class hadoop ($hadoop_security_authentication = "simple",
   $hadoop_storage_dirs = split($::hadoop_storage_dirs, ";"),
   $proxyusers = {
     oozie => { groups => 'hudson,testuser,root,hadoop,jenkins,oozie,hive,httpfs,users', hosts => "*" },
-     hive => { groups => 'hudson,testuser,root,hadoop,jenkins,oozie,hive,httpfs,users', hosts => "*" },
+     hive => { groups => '*', hosts => "*" },
    httpfs => { groups => 'hudson,testuser,root,hadoop,jenkins,oozie,hive,httpfs,users', hosts => "*" } },
   $generate_secrets = false,
   $kms_host = undef,
